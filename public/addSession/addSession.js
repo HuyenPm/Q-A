@@ -1,10 +1,10 @@
+// var hide = getElementByClassName("hide");
 var newEventModal = document.getElementById("new-event-modal");
 var eventNameInput = document.getElementById("event-name");
 var eventPassword = document.getElementById("event-pass");
 var eventBegin = document.getElementById("begin-time");
 var eventEnd = document.getElementById("end-time");
 var eventList = document.getElementById("event-list");
-var activeStatus = true;
 let socket = io();
 
 //hộp dropdown
@@ -37,9 +37,9 @@ function mOver(obj) {
     l[2].style.opacity = 0.5;
     l[0].children[1].style.visibility = "visible";  //dấu x 
     l[0].children[2].style.visibility = "visible";  //dấu đóng mở
-    if(activeStatus == true){
+    if(l[0].children[2].getAttribute("id") == "active"){    //kiểm tra điều kiện để khi đóng session không hiện nút load nữa
         l[5].style.visibility = "visible";   //load
-    }else{
+    }else if(l[0].children[2].getAttribute("id") == "inactive"){
         l[5].disabled = true;
     }
 }
@@ -91,7 +91,7 @@ function addSession(newSession) {
         "		  <button class=\"w3-bar-item w3-right hide inherit-button w3-button w3-hover-teal\" style=\"cursor: pointer;opacity:1.0\" onclick=\"deleteEvent(this)\">" +
         "			  <i class=\"fa fa-close\"></i>" +
         "		  </button>" +
-        "         <button class=\"w3-bar-item w3-right hide inherit-button w3-button w3-hover-teal\" onclick=\"closeSession(this)\">"+
+        "         <button id=\"active\" class=\"w3-bar-item w3-right hide inherit-button w3-button w3-hover-teal\" onclick=\"closeSession(this)\">"+
         "             <i class=\"fa fa-minus-circle\"></i>" +
         "	  </div>" +
         `	  <label class=\"w3-xlarge\" style=\"display: block;\">${newSession.eventName}</label>` +
@@ -147,9 +147,9 @@ function closeSession(obj){
     alert("Phiên hỏi đáp đã được đóng!");
     obj.parentNode.parentNode.classList.add("fade");
     obj.setAttribute("onclick","activeSession(this)");
+    obj.setAttribute("id","inactive");
     var child = obj.children;
     child[0].setAttribute("class","fa fa-check-circle");
-    activeStatus = false;
 }
 
 //kích hoạt phiên hỏi đáp
@@ -157,9 +157,9 @@ function activeSession(obj){
     alert("Phiên hỏi đáp đã được kích hoạt!");
     obj.parentNode.parentNode.classList.remove("fade");
     obj.setAttribute("onclick","closeSession(this)");
+    obj.setAttribute("id","active");
     var child = obj.children;
     child[0].setAttribute("class","fa fa-minus-circle");
-    activeStatus = true;
 }
 
 
