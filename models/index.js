@@ -14,3 +14,5 @@ mongoose.Promise = Promise;
 
 module.exports.Question = require('./question');
 module.exports.Comment = require('./comment');
+module.exports.Session = require('./session');
+module.exports.User = require('./user');

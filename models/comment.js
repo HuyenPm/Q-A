@@ -16,7 +16,12 @@ let commentSchema = new mongoose.Schema({
 	user: {
 		type: String,
 		default: 'Ẩn danh'
-	}
+	},
+	question: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Question'
+	},
+	postTime: Date
 });
 
 let Comment = mongoose.model("Comment", commentSchema);
